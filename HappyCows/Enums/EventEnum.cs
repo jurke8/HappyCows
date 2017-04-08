@@ -4,11 +4,11 @@ namespace HappyCows.Enums
 {
     public enum EventEnum
     {
-        [Description("Insemninated")] 
-        INSEMINATED = 1,
-        [Description("Pregnant")]  
-        PREGNANT = 2,
-        [Description("Open")]
-        OPEN = 3
+        [Description("Osjemenjivanje")]
+        INSEMINATION = 1,
+        [Description("Pregled")]
+        EXAMINATION = 2,
+        [Description("Teljenje")]
+        CALVING = 3,
     }
 }

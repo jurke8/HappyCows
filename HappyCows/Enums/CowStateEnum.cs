@@ -4,11 +4,12 @@ namespace HappyCows.Enums
 {
     public enum CowStateEnum
     {
-        [Description("Insemination")]
-        INSEMINATION = 1,
-        [Description("Examination")] 
-        EXAMINATION = 2,
-        [Description("Calving")]  
-        CALVING = 3,
+        [Description("Otvoreno")]
+        OPEN = 1,
+        [Description("Osjemenjeno")]
+        INSEMINATED = 2,
+        [Description("Steono")]
+        PREGNANT = 3
+
     }
 }
