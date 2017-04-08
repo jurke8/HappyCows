@@ -1,15 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HappyCows.Enums
 {
     public enum CowStateEnum
     {
-        [Description("Otvoreno")]
-        OPEN = 1,
-        [Description("Osjemenjeno")]
-        INSEMINATED = 2,
-        [Description("Steono")]
-        PREGNANT = 3
+        [Display(Name = "Otvoreno")]
+        OPEN,
+        [Display(Name = "Osjemenjeno")]
+        INSEMINATED,
+        [Display(Name = "Steono")]
+        PREGNANT
 
     }
 }

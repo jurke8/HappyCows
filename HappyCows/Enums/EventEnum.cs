@@ -1,14 +1,14 @@
-﻿using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HappyCows.Enums
 {
     public enum EventEnum
     {
-        [Description("Osjemenjivanje")]
-        INSEMINATION = 1,
-        [Description("Pregled")]
-        EXAMINATION = 2,
-        [Description("Teljenje")]
-        CALVING = 3,
+        [Display(Name = "Osjemenjivanje")]
+        INSEMINATION,
+        [Display(Name = "Pregled")]
+        EXAMINATION,
+        [Display(Name = "Teljenje")]
+        CALVING
     }
 }

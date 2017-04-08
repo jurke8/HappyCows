@@ -6,7 +6,7 @@ namespace HappyCows.Models
     public abstract class BaseEntity : IBaseEntity
     {
         public Guid Id { get; set; }
-
+        [Required]
         [Display(Name = "Ime")]
         public string Name { get; set; }
 
