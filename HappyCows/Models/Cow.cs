@@ -25,10 +25,6 @@ namespace HappyCows.Models
         [Display(Name = "Vrijeme prošlog događaja")]
         public DateTime DateOfPreviousEvent { get; set; }
 
-        [Display(Name = "Napomena")]
-        [DataType(DataType.MultilineText)]
-        public string Note { get; set; }
-
         [Display(Name = "Djeca")]
         public virtual ICollection<Calf> Calfs { get; set; }
 

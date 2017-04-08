@@ -13,14 +13,13 @@ namespace HappyCows.Models
         [Display(Name = "Tip")]
         public EventEnum EventType { get; set; }
 
-        [Display(Name = "Krava")]
-        public Cow Cow { get; set; }
-
-        [Display(Name = "Tele")]
-        public Calf Calf { get; set; }
-
         [Display(Name = "Vrijeme događaja")]
         public DateTime EventDate { get; set; }
+
+        [Display(Name = "Krava")]
+        public Guid CowId { get; set; }
+
+        public virtual Cow Cow { get; set; }
 
         public Event()
         {

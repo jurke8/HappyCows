@@ -13,9 +13,9 @@ namespace HappyCows.Models
         [Display(Name = "Datum rođenja")]
         public DateTime DateOfBirth { get; set; }
 
+        [Display(Name = "Mama")]
         public Guid MotherId { get; set; }
 
-        [Display(Name = "Mama")]
         public virtual Cow Mother { get; set; }
 
         public Calf()

@@ -12,7 +12,12 @@ namespace HappyCows.Models
 
         public bool Deleted { get; set; }
 
+        [Display(Name = "Datum kreiranja")]
         public DateTime DateCreated { get; set; }
+
+        [Display(Name = "Napomena")]
+        [DataType(DataType.MultilineText)]
+        public string Note { get; set; }
     }
     public interface IBaseEntity
     {
@@ -20,5 +25,6 @@ namespace HappyCows.Models
         string Name { get; set; }
         bool Deleted { get; set; }
         DateTime DateCreated { get; set; }
+        string Note { get; set; }
     }
 }
