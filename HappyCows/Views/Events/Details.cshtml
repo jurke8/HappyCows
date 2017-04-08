@@ -5,18 +5,35 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Detalji</h2>
 
 <div>
-    <h4>Event</h4>
+    <h4>Događaj</h4>
     <hr />
     <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.EventType)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.EventType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CowId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cow.Name)
         </dd>
 
         <dt>
@@ -28,19 +45,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Note)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Deleted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Deleted)
+            @Html.DisplayFor(model => model.Note)
         </dd>
 
         <dt>
@@ -54,6 +63,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Uredi", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Povratak na listu", "Index")
 </p>

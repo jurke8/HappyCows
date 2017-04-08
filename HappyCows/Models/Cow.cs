@@ -14,6 +14,7 @@ namespace HappyCows.Models
         public CowStateEnum State { get; set; }
 
         [NotMapped]
+        [DataType(DataType.Date)]
         [Display(Name = "Trajanje")]
         public DateTime DurationOfState { get; set; }
 
@@ -22,6 +23,7 @@ namespace HappyCows.Models
         public EventEnum PreviousEvent { get; set; }
 
         [NotMapped]
+        [DataType(DataType.Date)]
         [Display(Name = "Vrijeme prošlog događaja")]
         public DateTime DateOfPreviousEvent { get; set; }
 

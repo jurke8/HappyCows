@@ -38,6 +38,7 @@ namespace HappyCows.Controllers
         // GET: Events/Create
         public ActionResult Create()
         {
+            ViewBag.CowId = new SelectList(db.Cows, "Id", "Name");
             return View();
         }
 
@@ -46,7 +47,7 @@ namespace HappyCows.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EventType,EventDate,Name,Deleted,DateCreated")] Event @event)
+        public ActionResult Create([Bind(Include = "Id,EventType,EventDate,CowId,Name,Deleted,DateCreated,Note")] Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +57,7 @@ namespace HappyCows.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.CowId = new SelectList(db.Cows, "Id", "Name", @event.CowId);
             return View(@event);
         }
 
@@ -71,6 +73,7 @@ namespace HappyCows.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CowId = new SelectList(db.Cows, "Id", "Name", @event.CowId);
             return View(@event);
         }
 
@@ -79,7 +82,7 @@ namespace HappyCows.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,EventType,EventDate,Name,Deleted,DateCreated")] Event @event)
+        public ActionResult Edit([Bind(Include = "Id,EventType,EventDate,CowId,Name,Deleted,DateCreated,Note")] Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +90,8 @@ namespace HappyCows.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CowId = new SelectList(db.Cows, "Id", "Name", @event.CowId);
+
             return View(@event);
         }
 

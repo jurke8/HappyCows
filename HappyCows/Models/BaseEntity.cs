@@ -13,6 +13,7 @@ namespace HappyCows.Models
         public bool Deleted { get; set; }
 
         [Display(Name = "Datum kreiranja")]
+        [DataType(DataType.Date)]
         public DateTime DateCreated { get; set; }
 
         [Display(Name = "Napomena")]

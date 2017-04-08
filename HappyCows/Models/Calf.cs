@@ -11,12 +11,13 @@ namespace HappyCows.Models
     public class Calf : BaseEntity
     {
         [Display(Name = "Datum rođenja")]
+        [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
 
-        [Display(Name = "Mama")]
-        public Guid MotherId { get; set; }
+        [Display(Name = "Krava")]
+        public Guid CowId { get; set; }
 
-        public virtual Cow Mother { get; set; }
+        public virtual Cow Cow { get; set; }
 
         public Calf()
         {

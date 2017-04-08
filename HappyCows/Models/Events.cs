@@ -13,7 +13,8 @@ namespace HappyCows.Models
         [Display(Name = "Tip")]
         public EventEnum EventType { get; set; }
 
-        [Display(Name = "Vrijeme događaja")]
+        [Display(Name = "Datum")]
+        [DataType(DataType.Date)]
         public DateTime EventDate { get; set; }
 
         [Display(Name = "Krava")]

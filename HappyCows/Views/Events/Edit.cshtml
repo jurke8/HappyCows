@@ -5,34 +5,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2>Uređivanje</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Event</h4>
+        <h4>Događaj</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.EventType, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.EventType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EventDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EventDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -43,35 +27,51 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Deleted, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EventType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Deleted)
-                    @Html.ValidationMessageFor(model => model.Deleted, "", new { @class = "text-danger" })
-                </div>
+                @Html.EnumDropDownListFor(model => model.EventType, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EventType, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CowId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
+                @Html.DropDownList("CowId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CowId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EventDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input id="date-picker" type="text" name="EventDate" value="@string.Format("{0:d.M.yyyy.}", Model.EventDate)" class="form-control" />
+                @Html.ValidationMessageFor(model => model.EventDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Snimi" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Povratak na listu", "Index")
 </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/datepicker")
 }
