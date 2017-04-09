@@ -5,6 +5,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+<script language="javascript" type="text/javascript">
+    function GetCows(_stateId) {
+        var url = "/Events/GetCows/";
+        $.ajax({
+            url: url,
+            data: { stateId: _stateId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = " ";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#ddlCows").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+    }
+</script>
+
 <h2>Dodaj</h2>
 
 
@@ -28,7 +51,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.EventType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.EventType, htmlAttributes: new { @class = "form-control" })
+                @Html.EnumDropDownListFor(model => model.EventType, htmlAttributes: new { @class = "form-control", @onchange = "javascript:GetCows(this.value);" })
                 @Html.ValidationMessageFor(model => model.EventType, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,7 +59,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CowId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CowId", null, htmlAttributes: new { @class = "form-control" })
+                @*<select id="ddlcity" name="ddlcity" class="form-control"></select>*@
+                @Html.DropDownList("CowId", null, htmlAttributes: new { @class = "form-control", @name = "ddlCows", @id= "ddlCows" })
                 @Html.ValidationMessageFor(model => model.CowId, "", new { @class = "text-danger" })
             </div>
         </div>

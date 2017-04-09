@@ -38,7 +38,8 @@ namespace HappyCows.Controllers
         // GET: Events/Create
         public ActionResult Create()
         {
-            ViewBag.CowId = new SelectList(db.Cows, "Id", "Name");
+            var cows = db.Cows.Where(c => (int)c.State == 0).ToList();
+            ViewBag.CowId = new SelectList(cows, "Id", "Name");
             return View();
         }
 
@@ -49,15 +50,18 @@ namespace HappyCows.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,EventType,EventDate,CowId,Name,Deleted,DateCreated,Note")] Event @event)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && @event.CowId != Guid.Empty)
             {
-                @event.Id = Guid.NewGuid();
+                var cow = db.Cows.Where(c => c.Id == @event.CowId).First();
+                cow.State = (cow.State == Enums.CowStateEnum.PREGNANT) ? Enums.CowStateEnum.OPEN : (Enums.CowStateEnum)(++cow.State);
+                db.Entry(cow).State = EntityState.Modified;
                 db.Events.Add(@event);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CowId = new SelectList(db.Cows, "Id", "Name", @event.CowId);
+            var cows = db.Cows.Where(c => (int)c.State == (int)@event.EventType).ToList();
+            ViewBag.CowId = new SelectList(cows, "Id", "Name", @event.CowId);
             return View(@event);
         }
 
@@ -119,6 +123,14 @@ namespace HappyCows.Controllers
             db.Events.Remove(@event);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult GetCows(int stateId)
+        {
+            var cows = db.Cows.Where(c => (int)c.State == stateId).ToList();
+            SelectList cowsList = new SelectList(cows, "Id", "Name");
+            return Json(cowsList);
         }
 
         protected override void Dispose(bool disposing)
