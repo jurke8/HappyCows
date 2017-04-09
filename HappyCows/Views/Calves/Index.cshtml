@@ -10,20 +10,27 @@
 <p>
     @Html.ActionLink("Dodaj novo", "Create")
 </p>
+
+@using (Html.BeginForm())
+{
+    <div style="display:flex">
+        <p style="position:relative;padding-top:7px">Krava:</p>@Html.DropDownList("CowId", null, "Prikaži sve", htmlAttributes: new { @class = "form-control", @style = "margin-left:10px" })
+    </div>
+    <br />
+    <input type="submit" value="Filtriraj" />
+}
+<br />
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.ActionLink("Ime", "Index", new { sortOrder = ViewBag.NameSortParm, CowId = ViewBag.CowFilter })
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
+            @Html.ActionLink("Datum rođenja", "Index", new { sortOrder = ViewBag.DateSortParm, CowId = ViewBag.CowFilter })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CowId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Note)
+            @Html.ActionLink("Krava", "Index", new { sortOrder = ViewBag.CowSortParm, CowId = ViewBag.CowFilter })
         </th>
         <th></th>
     </tr>
@@ -39,9 +46,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Cow.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Note)
         </td>
         <td>
             @Html.ActionLink("Uredi", "Edit", new { id=item.Id }) |

@@ -1,0 +1,18 @@
+namespace HappyCows.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class cow_model_changed : DbMigration
+    {
+        public override void Up()
+        {
+            AddColumn("dbo.Cows", "DateOfPreviousEvent", c => c.DateTime(nullable: false));
+        }
+        
+        public override void Down()
+        {
+            DropColumn("dbo.Cows", "DateOfPreviousEvent");
+        }
+    }
+}

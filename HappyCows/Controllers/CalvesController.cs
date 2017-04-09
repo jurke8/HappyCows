@@ -15,9 +15,49 @@ namespace HappyCows.Controllers
         private HappyCowsContext db = new HappyCowsContext();
 
         // GET: Calves
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, Guid? CowId)
         {
             var calves = db.Calves.Include(c => c.Cow);
+
+            ViewBag.CowId = new SelectList(db.Cows, "Id", "Name");
+
+            //Filtering
+            if (CowId != null)
+            {
+                ViewBag.CowFilter = CowId;
+                calves = calves.Where(c => c.CowId == CowId);
+            }
+
+            //Sorting
+            ViewBag.NameSortParm = sortOrder == "name" ? "name_desc" : "name";
+            ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
+            ViewBag.CowSortParm = sortOrder == "cow" ? "cow_desc" : "cow";
+
+            switch (sortOrder)
+            {
+                case "name":
+                    calves = calves.OrderBy(c => c.Name);
+                    break;
+                case "name_desc":
+                    calves = calves.OrderByDescending(c => c.Name);
+                    break;
+                case "date":
+                    calves = calves.OrderBy(c => c.DateOfBirth);
+                    break;
+                case "date_desc":
+                    calves = calves.OrderByDescending(c => c.DateOfBirth);
+                    break;
+                case "cow":
+                    calves = calves.OrderBy(c => c.Cow.Name);
+                    break;
+                case "cow_desc":
+                    calves = calves.OrderByDescending(c => c.Cow.Name);
+                    break;
+                default:
+                    calves = calves.OrderBy(c => c.DateCreated);
+                    break;
+            }
+
             return View(calves.ToList());
         }
 
@@ -52,7 +92,6 @@ namespace HappyCows.Controllers
         {
             if (ModelState.IsValid)
             {
-                calf.Id = Guid.NewGuid();
                 db.Calves.Add(calf);
                 db.SaveChanges();
                 return RedirectToAction("Index");

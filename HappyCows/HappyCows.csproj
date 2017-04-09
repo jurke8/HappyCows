@@ -160,6 +160,10 @@
     <Compile Include="Migrations\201704082241529_data_anotations_added.Designer.cs">
       <DependentUpon>201704082241529_data_anotations_added.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704091853477_cow_model_changed.cs" />
+    <Compile Include="Migrations\201704091853477_cow_model_changed.Designer.cs">
+      <DependentUpon>201704091853477_cow_model_changed.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BaseEntity.cs" />
     <Compile Include="Models\Calf.cs" />
@@ -255,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704082241529_data_anotations_added.resx">
       <DependentUpon>201704082241529_data_anotations_added.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704091853477_cow_model_changed.resx">
+      <DependentUpon>201704091853477_cow_model_changed.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using HappyCows.Models;
+using HappyCows.Enums;
 
 namespace HappyCows.Controllers
 {
@@ -15,9 +16,63 @@ namespace HappyCows.Controllers
         private HappyCowsContext db = new HappyCowsContext();
 
         // GET: Events
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, int? TypeFilter, Guid? CowId)
         {
-            return View(db.Events.ToList());
+            var events = db.Events.ToList();
+
+            ViewBag.CowId = new SelectList(db.Cows, "Id", "Name");
+
+            // Filtering
+            if (TypeFilter != null)
+            {
+                ViewBag.TypeFilter = TypeFilter;
+                events = events.Where(e => (int)e.EventType == TypeFilter).ToList();
+            }
+            if (CowId != null)
+            {
+                ViewBag.CowFilter = CowId;
+                events = events.Where(e => e.CowId == CowId).ToList();
+            }
+
+            //Sorting
+            ViewBag.NameSortParm = sortOrder == "name" ? "name_desc" : "name";
+            ViewBag.TypeSortParm = sortOrder == "type" ? "type_desc" : "type";
+            ViewBag.CowSortParm = sortOrder == "cow" ? "cow_desc" : "cow";
+            ViewBag.DateSortParm = sortOrder == "date" ? "date_desc" : "date";
+
+
+
+            switch (sortOrder)
+            {
+                case "name":
+                    events = events.OrderBy(c => c.Name).ToList();
+                    break;
+                case "name_desc":
+                    events = events.OrderByDescending(c => c.Name).ToList();
+                    break;
+                case "type":
+                    events = events.OrderBy(c => c.EventType).ToList();
+                    break;
+                case "type_desc":
+                    events = events.OrderByDescending(c => c.EventType).ToList();
+                    break;
+                case "cow":
+                    events = events.OrderBy(c => c.Cow.Name).ToList();
+                    break;
+                case "cow_desc":
+                    events = events.OrderByDescending(c => c.Cow.Name).ToList();
+                    break;
+                case "date":
+                    events = events.OrderBy(c => c.EventDate).ToList();
+                    break;
+                case "date_desc":
+                    events = events.OrderByDescending(c => c.EventDate).ToList();
+                    break;
+                default:
+                    events = events.OrderBy(c => c.DateCreated).ToList();
+                    break;
+            }
+            return View(events);
         }
 
         // GET: Events/Details/5
@@ -54,6 +109,7 @@ namespace HappyCows.Controllers
             {
                 var cow = db.Cows.Where(c => c.Id == @event.CowId).First();
                 cow.State = (cow.State == Enums.CowStateEnum.PREGNANT) ? Enums.CowStateEnum.OPEN : (Enums.CowStateEnum)(++cow.State);
+                cow.DateOfPreviousEvent = @event.EventDate;
                 db.Entry(cow).State = EntityState.Modified;
                 db.Events.Add(@event);
                 db.SaveChanges();
@@ -90,7 +146,12 @@ namespace HappyCows.Controllers
         {
             if (ModelState.IsValid)
             {
+                var cow = db.Cows.Where(c => c.Id == @event.CowId).First();
+
                 db.Entry(@event).State = EntityState.Modified;
+
+                cow.DateOfPreviousEvent = @event.EventDate;
+                db.Entry(cow).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

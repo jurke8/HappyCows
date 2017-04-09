@@ -22,6 +22,9 @@ namespace HappyCows.Models
 
         public virtual Cow Cow { get; set; }
 
+        [NotMapped]
+        public EventEnum? TypeFilter { get; set; }
+
         public Event()
         {
             Id = Guid.NewGuid();

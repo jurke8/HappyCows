@@ -15,9 +15,53 @@ namespace HappyCows.Controllers
         private HappyCowsContext db = new HappyCowsContext();
 
         // GET: Cows
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, int? StateFilter)
         {
-            return View(db.Cows.ToList());
+            var cows = db.Cows.ToList();
+
+            // Filtering
+            if (StateFilter != null)
+            {
+                ViewBag.StateFilter = StateFilter;
+                cows = cows.Where(c => (int)c.State == StateFilter).ToList();
+            }
+
+            //Set duration
+            foreach (var cow in cows)
+            {
+                cow.DurationOfState = (DateTime.Now - cow.DateOfPreviousEvent).Days;
+            }
+
+            //Sorting
+            ViewBag.NameSortParm = sortOrder == "name" ? "name_desc" : "name";
+            ViewBag.StateSortParm = sortOrder == "state" ? "state_desc" : "state";
+            ViewBag.DurationSortParm = sortOrder == "duration" ? "duration_desc" : "duration";
+
+            switch (sortOrder)
+            {
+                case "name":
+                    cows = cows.OrderBy(c => c.Name).ToList();
+                    break;
+                case "name_desc":
+                    cows = cows.OrderByDescending(c => c.Name).ToList();
+                    break;
+                case "state":
+                    cows = cows.OrderBy(c => c.State).ToList();
+                    break;
+                case "state_desc":
+                    cows = cows.OrderByDescending(c => c.State).ToList();
+                    break;
+                case "duration":
+                    cows = cows.OrderBy(c => c.DurationOfState).ToList();
+                    break;
+                case "duration_desc":
+                    cows = cows.OrderByDescending(c => c.DurationOfState).ToList();
+                    break;
+                default:
+                    cows = cows.OrderBy(c => c.DateCreated).ToList();
+                    break;
+            }
+            return View(cows);
         }
 
         // GET: Cows/Details/5
@@ -50,7 +94,7 @@ namespace HappyCows.Controllers
         {
             if (ModelState.IsValid)
             {
-                cow.Id = Guid.NewGuid();
+                cow.DateOfPreviousEvent = DateTime.Now;
                 db.Cows.Add(cow);
                 db.SaveChanges();
                 return RedirectToAction("Index");
