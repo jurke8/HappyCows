@@ -10,8 +10,6 @@ namespace HappyCows.Models
         [Display(Name = "Ime")]
         public string Name { get; set; }
 
-        public bool Deleted { get; set; }
-
         [Display(Name = "Datum kreiranja")]
         [DataType(DataType.Date)]
         public DateTime DateCreated { get; set; }
@@ -24,7 +22,6 @@ namespace HappyCows.Models
     {
         Guid Id { get; set; }
         string Name { get; set; }
-        bool Deleted { get; set; }
         DateTime DateCreated { get; set; }
         string Note { get; set; }
     }

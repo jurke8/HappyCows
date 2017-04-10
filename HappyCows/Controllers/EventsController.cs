@@ -101,7 +101,7 @@ namespace HappyCows.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EventType,EventDate,CowId,Name,Deleted,DateCreated,Note")] Event @event)
+        public ActionResult Create([Bind(Include = "Id,EventType,EventDate,CowId,Name,DateCreated,Note")] Event @event)
         {
             if (ModelState.IsValid && @event.CowId != Guid.Empty)
             {
@@ -140,7 +140,7 @@ namespace HappyCows.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,EventType,EventDate,CowId,Name,Deleted,DateCreated,Note")] Event @event)
+        public ActionResult Edit([Bind(Include = "Id,EventType,EventDate,CowId,Name,Note")] Event @event)
         {
             if (ModelState.IsValid)
             {
