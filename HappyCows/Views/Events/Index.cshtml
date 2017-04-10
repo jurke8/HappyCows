@@ -11,18 +11,22 @@
     @Html.ActionLink("Dodaj novi", "Create")
 </p>
 
-
 @using (Html.BeginForm())
 {
     <div style="display:flex">
         <p style="position:relative;padding-top:7px">Tip:</p> @Html.EnumDropDownListFor(model => model.FirstOrDefault().TypeFilter, "Prikaži sve", htmlAttributes: new { @class = "form-control", @style = "margin-left:28px" })
     </div>
-    <br />
-    <div style="display:flex">
-        <p style="position:relative;padding-top:7px">Krava:</p>@Html.DropDownList("CowId", null, "Prikaži sve", htmlAttributes: new { @class = "form-control", @style = "margin-left:10px" })
-    </div>
-    <br />
-    <input type="submit" value="Filtriraj" />
+        <br />
+        <div style="display:flex">
+            <p style="position:relative;padding-top:7px">Krava:</p>@Html.DropDownList("CowId", null, "Prikaži sve", htmlAttributes: new { @class = "form-control", @style = "margin-left:10px" })
+        </div>
+        <br />
+        <input type="submit" value="Filtriraj" />
+}
+<br />
+@using (Html.BeginForm("Export", "Events", new { TypeFilter = ViewBag.TypeFilter, CowId = ViewBag.CowFilter }))
+{
+    <input type="submit" value="Izvoz u Excel" />
 }
 <br />
 <table class="table">

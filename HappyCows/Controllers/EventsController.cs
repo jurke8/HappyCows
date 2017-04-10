@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using HappyCows.Models;
-using HappyCows.Enums;
+using HappyCows.Utils;
 
 namespace HappyCows.Controllers
 {
@@ -193,6 +191,25 @@ namespace HappyCows.Controllers
             SelectList cowsList = new SelectList(cows, "Id", "Name");
             return Json(cowsList);
         }
+        public ActionResult Export(int? TypeFilter, Guid? CowId)
+        {
+            var fileDownloadName = "Događaji-" + DateTime.Now.ToShortDateString() + ".xlsx";
+            const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+            var reportUtils = new ReportUtils();
+
+            var fileStream = reportUtils.GenerateReport(TypeFilter,CowId);
+            if (fileStream != null)
+            {
+                var fsr = new FileStreamResult(fileStream, contentType) { FileDownloadName = fileDownloadName };
+                return fsr;
+            }
+            else
+            {
+                return RedirectToAction("Index", "Events", new { errors = true });
+            }
+        }
+
 
         protected override void Dispose(bool disposing)
         {
